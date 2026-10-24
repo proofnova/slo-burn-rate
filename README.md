@@ -1,10 +1,16 @@
 # Multi-window SLO analyst
 
-오류 예산 소모를 긴·짧은 구간에서 함께 계산하고 관측 누락을 분리한다.
+<a href="README.md"><kbd><strong>English</strong></kbd></a> <a href="README.ko.md"><kbd>한국어</kbd></a> <a href="README.ja.md"><kbd>日本語</kbd></a> <a href="README.zh-CN.md"><kbd>简体中文</kbd></a>
 
-A focused executable resource for AI-assisted structured work. **Zero runtime dependencies, no API key, Node.js 22+.**
+**Evaluate paired long and short error-budget windows while separating missing observations from healthy signals.**
 
-[Live workspace](https://proofnova.github.io/slo-burn-rate/) · [한국어 리소스 모음](https://proofnova.github.io/) · [Task contract](resource.json) · [Prior art](RESEARCH.md)
+An executable resource for AI-assisted structured work. Runs locally with **zero runtime dependencies, no API key and no account**.
+
+[Open the workspace](https://proofnova.github.io/slo-burn-rate/) · [Explore all resources](https://proofnova.github.io/) · [Task contract](resource.json) · [Alternatives and research](RESEARCH.md)
+
+## Quick start
+
+Requires Node.js 22 or later. No package installation is needed.
 
 ```sh
 git clone https://github.com/proofnova/slo-burn-rate.git
@@ -15,24 +21,48 @@ node cli.mjs example.json
 
 ## What it does
 
-Request-weighted burn rates and complete-bin coverage before alert decisions.
+Evaluate paired long and short error-budget windows while separating missing observations from healthy signals.
 
-Missing or zero-traffic windows yield insufficient-data instead of a false clear result.
+**Implementation:** Request-weighted burn rates and complete-bin coverage before alert decisions.
 
-## Connect a model
+**Task-specific recovery:** Recover missing bins before declaring clear; adjust explicit SLO/policies rather than changing denominators.
 
-Import `execute` from `./run.mjs`. Expose this declared tool to your model, validate its tool name/input contract, execute it, and retain the returned JSON and input digest. Calculations and constraint checks are performed by the resource. No paid model or new agent framework is required.
+### Required input fields
 
-[SKILL.md](SKILL.md) contains the workflow, interpretation and recovery procedure. [example.json](example.json) is a complete input; [cases.json](cases.json) contains worked and edge-case synthetic regression checks. The website executes the same code locally in a bounded Worker. It has no model or external data upload.
+`now` · `objective` · `bins` · `policies`
 
-## Recovery and limits
+Field names are part of the API contract and stay unchanged in every language. See [example.json](example.json) for a complete input and [cases.json](cases.json) for normal and edge cases.
 
-Recover missing bins before declaring clear; adjust explicit SLO/policies rather than changing denominators.
+### Worked example
 
-Underlying algorithms and task outcomes already exist in the alternatives. An existing tool configured for this exact task may remove the need for a separate project. Small synthetic tests cannot establish broad expertise or external demand. See [RESEARCH.md](RESEARCH.md). A plan/audit is not an external action or proof of actual user benefit.
+```json
+{
+  "firing": 1,
+  "insufficient": 0,
+  "clear": 0
+}
+```
+
+These values come from the included synthetic example. They are not model-performance or real-user adoption claims.
+
+## Use it with a model
+
+Import `execute` from `./run.mjs`, register it as a declared tool, validate the selected tool and input, and retain the returned JSON and input digest. The user or integration selects the resource. Deterministic code performs the calculation; this does not demonstrate autonomous model reasoning.
+
+The [AI skill](SKILL.md) explains input checks, interpretation and recovery. The browser runs the same calculation locally in a bounded worker and does not upload the input.
+
+## Validation and recovery
+
+The bundled tests cover two synthetic task cases, Node/browser parity, input immutability and rejection of missing input. Run `npm test` after any change.
+
+Inspect held, rejected or infeasible items before using the result. Correct the input or declared constraints and rerun; do not treat an unresolved case as success. Exact rules and task-specific limits are in the task contract and skill.
+
+## Scope and limits
+
+The underlying algorithms and task outcomes have established prior art. Practical differentiation is a hypothesis; an existing configured tool may already be the better choice. Synthetic regression checks do not establish general model expertise or real-world impact. The recorded model comparison covers six synthetic tasks and does not validate all thirty resources. No external users or GitHub Stars membership are implied.
 
 ## Contribute
 
-Open an issue with a synthetic/redacted failing JSON input, expected result and Node version. Add a regression test and run `npm test`. Never include credentials or real private records in public examples.
+Report a reproducible, synthetic or redacted failing input, the expected result and your Node version. Include a regression case and run `npm test`. Keep credentials and private records out of public examples.
 
 MIT · Proofnova · 2026
