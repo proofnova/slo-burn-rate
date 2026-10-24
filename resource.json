@@ -48,7 +48,11 @@
       "evidence_status": "primary page read; exact feature parity not fully executed"
     },
     {
-      "evidence_status": "primary page read; exact feature parity not fully executed"
+      "name": "Prometheus",
+      "url": "https://prometheus.io/docs/prometheus/latest/querying/basics/",
+      "capability": "Monitoring query system; the exact page timed out in this session",
+      "burden": "Exact current configuration/alert parity remains unconfirmed; no missing-feature claim",
+      "evidence_status": "Access limited: feature details unverified"
     },
     {
       "name": "Manual or composed workflow",
@@ -64,18 +68,22 @@
       "Korean"
     ],
     "queries": [
-      "Multi-window SLO analyst",
-      "slo burn rate",
-      "오류 예산 소모를 긴·짧은 구간에서 함께 계산하고 관측 누락을 분리한다.",
-      "sre",
-      "prometheus"
+      "multi window SLO burn rate missing data request weighted 오류 예산"
     ],
     "scope": "Primary documentation and repository descriptions were read on the public web. Competitor code, plugins and packaged execution were not exhaustively tested. This is a bounded prior-art review, not a worldwide novelty search.",
     "limitations": [
       "Search results and documentation do not establish universal absence.",
       "Competitor configuration/plugin parity is not exhausted.",
       "No independent end-user interview or deployment evidence."
-    ]
+    ],
+    "proposed_queries": [
+      "Multi-window SLO analyst",
+      "slo burn rate",
+      "오류 예산 소모를 긴·짧은 구간에서 함께 계산하고 관측 누락을 분리한다.",
+      "sre",
+      "prometheus"
+    ],
+    "query_scope": "One actual bilingual search per resource, grouped in shared cached batches; additional suggested terms are explicitly proposed, not executed."
   },
   "checked_at": "2026-10-24",
   "distinctive_capability": "Request-weighted burn rates and complete-bin coverage before alert decisions. An offline executable can be called by a small model and checked against an explicit task contract.",
@@ -101,7 +109,8 @@
   "validation_results": {
     "worked_cases": 1,
     "evaluation_cases": 1,
-    "root_required_field_rejection": true
+    "root_required_field_rejection": true,
+    "fixture_role": "Development regression fixtures; not an untouched final model evaluation set."
   },
   "external_impact_evidence": [],
   "decision": {
